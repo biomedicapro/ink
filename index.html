@@ -53,9 +53,8 @@
     text-align: right;
   }
 
-  .toggle {
+  .toggle, .fs {
     position: fixed;
-    top: 44px;
     right: 16px;
     width: 28px;
     height: 28px;
@@ -68,7 +67,10 @@
     opacity: .55;
   }
 
-  .toggle:hover {
+  .toggle { top: 44px; }
+  .fs { top: 80px; }
+
+  .toggle:hover, .fs:hover {
     opacity: .9;
   }
 </style>
@@ -81,15 +83,41 @@
   </p>
 
   <button class="toggle" id="toggle" title="Cambiar modo">◐</button>
+  <button class="fs" id="fs" title="Pantalla completa (F)">⛶</button>
 
   <script>
     const btn = document.getElementById('toggle');
+    const fsBtn = document.getElementById('fs');
 
+    // 🌗 Modo día/noche
     btn.addEventListener('click', () => {
       document.documentElement.classList.toggle('day');
       btn.textContent = document.documentElement.classList.contains('day')
         ? '◑'
         : '◐';
+    });
+
+    // 🖥️ Fullscreen
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    fsBtn.addEventListener('click', toggleFullscreen);
+
+    // ⌨️ Atajo teclado
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+    });
+
+    // 🔁 Cambiar icono según estado
+    document.addEventListener('fullscreenchange', () => {
+      fsBtn.textContent = document.fullscreenElement ? '🡼' : '⛶';
     });
   </script>
 </body>
