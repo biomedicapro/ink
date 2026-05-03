@@ -3,21 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>E-Ink</title>
+<title>E-Ink Screen</title>
 
 <style>
   :root {
-    /* modo noche tipo e-ink invertido */
-    --bg: #1b1b18;
-    --text: #b9b8ad;
-    --soft: rgba(185,184,173,.08);
+    --bg: #030303;
+    --text: #c9c9c1;
+    --grain: rgba(255,255,255,.025);
   }
 
   :root.day {
-    /* modo día tipo papel Kindle */
-    --bg: #d6d3c3;
-    --text: #22221f;
-    --soft: rgba(34,34,31,.08);
+    --bg: #d8d6c8;
+    --text: #1d1d1a;
+    --grain: rgba(0,0,0,.035);
   }
 
   html, body {
@@ -35,77 +33,63 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: .22;
     background:
-      repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 2px,
-        var(--soft) 3px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent 0px,
-        transparent 3px,
-        var(--soft) 4px
-      );
-    mix-blend-mode: multiply;
+      radial-gradient(circle at 20% 30%, var(--grain) 0 1px, transparent 1px),
+      radial-gradient(circle at 70% 60%, var(--grain) 0 1px, transparent 1px),
+      linear-gradient(135deg, rgba(255,255,255,.018), rgba(0,0,0,.04));
+    background-size: 3px 3px, 4px 4px, 100% 100%;
+    opacity: .7;
   }
 
   .note {
     position: fixed;
-    top: 16px;
-    right: 18px;
-    max-width: 150px;
+    top: 14px;
+    right: 16px;
+    max-width: 160px;
     font-size: 10px;
     line-height: 1.35;
-    letter-spacing: .04em;
-    text-align: right;
+    letter-spacing: .03em;
     opacity: .55;
+    text-align: right;
   }
 
   .toggle {
     position: fixed;
-    top: 48px;
-    right: 18px;
-    width: 30px;
-    height: 30px;
+    top: 44px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
     border: 1px solid currentColor;
     border-radius: 50%;
     background: transparent;
     color: var(--text);
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
-    opacity: .5;
+    opacity: .55;
   }
 
   .toggle:hover {
-    opacity: .85;
+    opacity: .9;
   }
 </style>
 </head>
 
 <body>
   <p class="note">
-    pantalla de tinta<br>
-    bajo contrastepantalla de tinta<br>
-    bajo contrastepantalla de tinta<br>
-    bajo contrastepantalla de tinta<br>
-    bajo contrastepantalla de tinta<br>
-    bajo contrastepantalla de tinta<br>
-    bajo contrastepantalla de tinta<br>
-    bajo contraste
+    tinta electrónica<br>
+    silencio visual
   </p>
 
   <button class="toggle" id="toggle" title="Cambiar modo">◐</button>
 
   <script>
-    const root = document.documentElement;
     const btn = document.getElementById('toggle');
 
     btn.addEventListener('click', () => {
-      root.classList.toggle('day');
-      btn.textContent = root.classList.contains('day') ? '◑' : '◐';
+      document.documentElement.classList.toggle('day');
+      btn.textContent = document.documentElement.classList.contains('day')
+        ? '◑'
+        : '◐';
     });
   </script>
 </body>
