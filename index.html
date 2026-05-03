@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>E-Ink</title>
+
+<style>
+  :root {
+    /* modo noche tipo e-ink invertido */
+    --bg: #1b1b18;
+    --text: #b9b8ad;
+    --soft: rgba(185,184,173,.08);
+  }
+
+  :root.day {
+    /* modo día tipo papel Kindle */
+    --bg: #d6d3c3;
+    --text: #22221f;
+    --soft: rgba(34,34,31,.08);
+  }
+
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Georgia, "Times New Roman", serif;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .22;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        var(--soft) 3px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 3px,
+        var(--soft) 4px
+      );
+    mix-blend-mode: multiply;
+  }
+
+  .note {
+    position: fixed;
+    top: 16px;
+    right: 18px;
+    max-width: 150px;
+    font-size: 10px;
+    line-height: 1.35;
+    letter-spacing: .04em;
+    text-align: right;
+    opacity: .55;
+  }
+
+  .toggle {
+    position: fixed;
+    top: 48px;
+    right: 18px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text);
+    font-size: 15px;
+    cursor: pointer;
+    opacity: .5;
+  }
+
+  .toggle:hover {
+    opacity: .85;
+  }
+</style>
+</head>
+
+<body>
+  <p class="note">
+    pantalla de tinta<br>
+    bajo contrastepantalla de tinta<br>
+    bajo contrastepantalla de tinta<br>
+    bajo contrastepantalla de tinta<br>
+    bajo contrastepantalla de tinta<br>
+    bajo contrastepantalla de tinta<br>
+    bajo contrastepantalla de tinta<br>
+    bajo contraste
+  </p>
+
+  <button class="toggle" id="toggle" title="Cambiar modo">◐</button>
+
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById('toggle');
+
+    btn.addEventListener('click', () => {
+      root.classList.toggle('day');
+      btn.textContent = root.classList.contains('day') ? '◑' : '◐';
+    });
+  </script>
+</body>
+</html>
